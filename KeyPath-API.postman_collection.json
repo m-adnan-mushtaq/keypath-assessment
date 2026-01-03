@@ -1,0 +1,499 @@
+{
+  "info": {
+    "name": "KeyPath Backend API",
+    "description": "Multi-tenant Property Management API with Ownership Credits",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/v1",
+      "type": "string"
+    },
+    {
+      "key": "landlordUserId",
+      "value": "landlord-001",
+      "type": "string"
+    },
+    {
+      "key": "tenantUserId",
+      "value": "tenant-001",
+      "type": "string"
+    },
+    {
+      "key": "orgId",
+      "value": "org-001",
+      "type": "string"
+    },
+    {
+      "key": "propertyId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "unitId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tenantId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Properties",
+      "item": [
+        {
+          "name": "Create Property",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"zip\": \"94101\",\n    \"country\": \"USA\"\n  },\n  \"nickname\": \"Downtown Apartment Complex\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/properties",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties"]
+            }
+          }
+        },
+        {
+          "name": "List Properties",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties?city=San Francisco&sortBy=createdAt:desc&limit=10&page=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "San Francisco"
+                },
+                {
+                  "key": "state",
+                  "value": "CA",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt:desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Property",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Property",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nickname\": \"Updated Apartment Name\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Units",
+      "item": [
+        {
+          "name": "Create Unit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unitNumber\": \"101\",\n  \"rent\": 2500.00\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}/units",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}", "units"]
+            }
+          }
+        },
+        {
+          "name": "List Units",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}/units?sortBy=unitNumber:asc",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}", "units"],
+              "query": [
+                {
+                  "key": "sortBy",
+                  "value": "unitNumber:asc"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tenants",
+      "item": [
+        {
+          "name": "Create Tenant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unitId\": \"{{unitId}}\",\n  \"userId\": \"tenant-001\",\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants"]
+            }
+          }
+        },
+        {
+          "name": "Get My Tenant Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{tenantUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "tenant",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Credits",
+      "item": [
+        {
+          "name": "Earn Credits (Landlord)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{landlordUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "landlord",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 150.00,\n  \"memo\": \"On-time rent payment bonus\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants/{{tenantId}}/credits/earn",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "{{tenantId}}", "credits", "earn"]
+            }
+          }
+        },
+        {
+          "name": "Redeem Credits (Tenant)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{tenantUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "tenant",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 50.00,\n  \"memo\": \"Redeemed for gift card\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants/{{tenantId}}/credits/redeem",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "{{tenantId}}", "credits", "redeem"]
+            }
+          }
+        },
+        {
+          "name": "Get Credit Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{tenantUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "tenant",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants/{{tenantId}}/credits/balance",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "{{tenantId}}", "credits", "balance"]
+            }
+          }
+        },
+        {
+          "name": "Get Credit Ledger",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{tenantUserId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-org-id",
+                "value": "{{orgId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-role",
+                "value": "tenant",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants/{{tenantId}}/credits/ledger?sortBy=createdAt:desc&limit=20&page=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["tenants", "{{tenantId}}", "credits", "ledger"],
+              "query": [
+                {
+                  "key": "sortBy",
+                  "value": "createdAt:desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
